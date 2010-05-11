@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<project default="create_run_jar" name="Create Runnable Jar for Project Nor with libraries in sub-folder">
+    <!--this file was created by Eclipse Runnable JAR Export Wizard-->
+    <!--ANT 1.7 is required                                        -->
+    <target name="create_run_jar">
+        <jar destfile="/home/harry/workspace/Nor/dist/Nor.jar">
+            <manifest>
+                <attribute name="Main-Class" value="in.haeg.nor.Main"/>
+                <attribute name="Class-Path" value=". Nor_lib/commons-logging-1.1.jar Nor_lib/ws-commons-util-1.0.2.jar Nor_lib/xmlrpc-client-3.1.3.jar Nor_lib/xmlrpc-common-3.1.3.jar Nor_lib/xmlrpc-server-3.1.3.jar Nor_lib/apache-mime4j-0.6.jar Nor_lib/commons-codec-1.3.jar Nor_lib/commons-logging-1.1.1.jar Nor_lib/httpclient-4.0.1.jar Nor_lib/httpcore-4.0.1.jar Nor_lib/httpmime-4.0.1.jar"/>
+            </manifest>
+            <fileset dir="/home/harry/workspace/Nor/bin"/>
+        </jar>
+        <delete dir="/home/harry/workspace/Nor/dist/Nor_lib"/>
+        <mkdir dir="/home/harry/workspace/Nor/dist/Nor_lib"/>
+        <copy file="/home/harry/workspace/Nor/lib/apache-xmlrpc-3.1.3/lib/commons-logging-1.1.jar" todir="/home/harry/workspace/Nor/dist/Nor_lib"/>
+        <copy file="/home/harry/workspace/Nor/lib/apache-xmlrpc-3.1.3/lib/ws-commons-util-1.0.2.jar" todir="/home/harry/workspace/Nor/dist/Nor_lib"/>
+        <copy file="/home/harry/workspace/Nor/lib/apache-xmlrpc-3.1.3/lib/xmlrpc-client-3.1.3.jar" todir="/home/harry/workspace/Nor/dist/Nor_lib"/>
+        <copy file="/home/harry/workspace/Nor/lib/apache-xmlrpc-3.1.3/lib/xmlrpc-common-3.1.3.jar" todir="/home/harry/workspace/Nor/dist/Nor_lib"/>
+        <copy file="/home/harry/workspace/Nor/lib/apache-xmlrpc-3.1.3/lib/xmlrpc-server-3.1.3.jar" todir="/home/harry/workspace/Nor/dist/Nor_lib"/>
+        <copy file="/home/harry/javaLibraries/httpcomponents-client-4.0.1/lib/apache-mime4j-0.6.jar" todir="/home/harry/workspace/Nor/dist/Nor_lib"/>
+        <copy file="/home/harry/javaLibraries/httpcomponents-client-4.0.1/lib/commons-codec-1.3.jar" todir="/home/harry/workspace/Nor/dist/Nor_lib"/>
+        <copy file="/home/harry/javaLibraries/httpcomponents-client-4.0.1/lib/commons-logging-1.1.1.jar" todir="/home/harry/workspace/Nor/dist/Nor_lib"/>
+        <copy file="/home/harry/javaLibraries/httpcomponents-client-4.0.1/lib/httpclient-4.0.1.jar" todir="/home/harry/workspace/Nor/dist/Nor_lib"/>
+        <copy file="/home/harry/javaLibraries/httpcomponents-client-4.0.1/lib/httpcore-4.0.1.jar" todir="/home/harry/workspace/Nor/dist/Nor_lib"/>
+        <copy file="/home/harry/javaLibraries/httpcomponents-client-4.0.1/lib/httpmime-4.0.1.jar" todir="/home/harry/workspace/Nor/dist/Nor_lib"/>
+    </target>
+</project>
