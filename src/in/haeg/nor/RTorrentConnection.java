@@ -29,16 +29,16 @@ public class RTorrentConnection {
         return (Integer) m_Client.execute("get_upload_rate", nullParams);
     }
 
-    public String getUploadTotal() throws XmlRpcException {
-        return (String) m_Client.execute("get_up_total", nullParams);
+    public int getUploadTotal() throws XmlRpcException {
+        return (Integer) m_Client.execute("get_up_total", nullParams);
     }
 
     public int getDownloadRate() throws XmlRpcException {
         return (Integer) m_Client.execute("get_download_rate", nullParams);
     }
 
-    public String getDownloadTotal() throws XmlRpcException {
-        return (String) m_Client.execute("get_down_total", nullParams);
+    public int getDownloadTotal() throws XmlRpcException {
+        return (Integer) m_Client.execute("get_down_total", nullParams);
     }
 
     public String getSessionDir() throws XmlRpcException {

@@ -16,6 +16,8 @@ public class Main {
             System.out.println("The session dir is: " + conn.getSessionDir());
             System.out.println("The IP is: " + conn.getIP());
             System.out.println("The port range is: " + conn.getPortRange());
+            System.out.println("You have downloaded (MB): " + (conn.getDownloadTotal() / 1024 / 1024));
+            System.out.println("You have uploaded (MB): " + (conn.getUploadTotal()));
         } catch (Exception ex) {
             ex.printStackTrace();
         }
