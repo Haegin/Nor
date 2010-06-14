@@ -2,6 +2,8 @@ package in.haeg.nor;
 
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.List;
+
 import org.apache.xmlrpc.XmlRpcException;
 import org.apache.xmlrpc.client.XmlRpcClient;
 import org.apache.xmlrpc.client.XmlRpcClientConfigImpl;
@@ -12,6 +14,7 @@ public class RTorrentConnection {
 
     private XmlRpcClient           m_Client;
     private XmlRpcClientConfigImpl m_Config;
+    private List<Torrent>          m_Torrents;
 
     public RTorrentConnection(String a_URL) {
         m_Client = new XmlRpcClient();
@@ -19,6 +22,22 @@ public class RTorrentConnection {
         try {
             m_Config.setServerURL(new URL(a_URL));
             m_Client.setConfig(m_Config);
+
+            Object[] params = { "name", "d.get_hash=", "d.get_directory=", "d.get_name=" };
+            try {
+                Object[] returned = (Object[]) m_Client.execute("d.multicall", params);
+                Object[] torrentInfo;
+                String torrentHash, torrentName, torrentDirectory;
+                for (Object obj : returned) {
+                    torrentInfo = (Object[]) obj;
+                    torrentHash = (String) torrentInfo[0];
+                    torrentDirectory = (String) torrentInfo[1];
+                    torrentName = (String) torrentInfo[2];
+                    m_Torrents.add(new Torrent(torrentHash, torrentName, torrentDirectory));
+                }
+            } catch (XmlRpcException ex) {
+                ex.printStackTrace();
+            }
         } catch (MalformedURLException ex) {
             ex.printStackTrace();
         }
@@ -30,7 +49,7 @@ public class RTorrentConnection {
     }
 
     public int getUploadTotal() throws XmlRpcException {
-        return (Integer) m_Client.execute("get_up_total", nullParams);
+        return (Integer) m_Client.execute("to_mb=$get_up_total", nullParams);
     }
 
     public int getDownloadRate() throws XmlRpcException {
@@ -38,7 +57,7 @@ public class RTorrentConnection {
     }
 
     public int getDownloadTotal() throws XmlRpcException {
-        return (Integer) m_Client.execute("get_down_total", nullParams);
+        return (Integer) m_Client.execute("to_mb=$get_down_total", nullParams);
     }
 
     public String getSessionDir() throws XmlRpcException {
