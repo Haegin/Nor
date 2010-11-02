@@ -2,6 +2,7 @@ package in.haeg.nor;
 
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -30,20 +31,20 @@ public class RTorrentConnection {
     }
 
     /* Getters */
-    public int getUploadRate() throws XmlRpcException {
+    public int getUploadLimit() throws XmlRpcException {
         return (Integer) m_Client.execute("get_upload_rate", NULL_PARAMS);
     }
 
-    public int getUploadTotal() throws XmlRpcException {
-        return (Integer) m_Client.execute("to_mb=$get_up_total", NULL_PARAMS);
+    public int getUploadSpeed() throws XmlRpcException {
+        return (Integer) m_Client.execute("get_up_rate", NULL_PARAMS);
     }
 
-    public int getDownloadRate() throws XmlRpcException {
+    public int getDownloadLimit() throws XmlRpcException {
         return (Integer) m_Client.execute("get_download_rate", NULL_PARAMS);
     }
 
-    public int getDownloadTotal() throws XmlRpcException {
-        return (Integer) m_Client.execute("to_mb=$get_down_total", NULL_PARAMS);
+    public int getDownloadSpeed() throws XmlRpcException {
+        return (Integer) m_Client.execute("get_down_rate", NULL_PARAMS);
     }
 
     public String getSessionDir() throws XmlRpcException {
@@ -67,18 +68,25 @@ public class RTorrentConnection {
     }
 
     public List<Torrent> getTorrents(String a_ViewName) throws XmlRpcException {
-        Object[] params = { a_ViewName, "d.get_hash=", "d.get_name=" };
+        Object[] params = { a_ViewName, "d.get_hash=" };
         List<Torrent> torrentList = new LinkedList<Torrent>();
         Object[] returned = (Object[]) m_Client.execute("d.multicall", params);
         Object[] torrentInfo;
-        String torrentHash, torrentName;
+        String torrentHash;
         for (Object obj : returned) {
             torrentInfo = (Object[]) obj;
             torrentHash = (String) torrentInfo[0];
-            torrentName = (String) torrentInfo[1];
-            torrentList.add(new Torrent(m_Client, torrentHash, torrentName));
+            torrentList.add(new Torrent(m_Client, torrentHash));
         }
         return torrentList;
+    }
+
+    public Torrent getTorrent(String a_Hash) throws XmlRpcException {
+        HashMap<String, Torrent> torrents = new HashMap<String, Torrent>();
+        for (Torrent torrent : getTorrents("name")) {
+            torrents.put(torrent.getHash(), torrent);
+        }
+        return torrents.get(a_Hash);
     }
 
     /* Setters */

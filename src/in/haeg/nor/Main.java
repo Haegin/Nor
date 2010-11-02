@@ -23,19 +23,21 @@ public class Main {
             // System.out.println("You have downloaded (MB): " + (conn.getDownloadTotal() / 1024 / 1024));
             // System.out.println("You have uploaded (MB): " + (conn.getUploadTotal()));
 
-            List<Torrent> torrents = conn.getTorrents("name");
+            List<Torrent> torrents = conn.getTorrents("complete");
             Torrent torrent;
-            File file;
-            for (int torrentNumb = 0; torrentNumb < 10; ++torrentNumb) {
+            TorrentFile file;
+            for (int torrentNumb = 0; torrentNumb < (torrents.size() - 1); ++torrentNumb) {
                 torrent = torrents.get(torrentNumb);
-                System.out.println(torrent.getName());
-                System.out.println(torrent.getDirectory());
-                Map<Integer, File> files = torrent.getFiles();
-                for (Integer fileNumb : files.keySet()) {
-                    file = files.get(fileNumb);
-                    System.out.println("\t" + file.getPath());
+                if (torrent.getType().equals("tv") && torrent.getDirectory().equals("/mnt/sleipnir/downloads/complete/tv")) {
+                    System.out.println(torrent.getHash());
                 }
-                System.out.println();
+                // System.out.println(torrent.getDirectory());
+                // Map<Integer, File> files = torrent.getFiles();
+                // for (Integer fileNumb : files.keySet()) {
+                // file = files.get(fileNumb);
+                // System.out.println("\t" + file.getPath());
+                // }
+                // System.out.println();
             }
 
         } catch (Exception ex) {
